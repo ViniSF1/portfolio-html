@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="pt-BR" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vinícius Faria | Portfolio</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text x='50%' y='50%' text-anchor='middle' dominant-baseline='central' font-size='80'>🧙‍♂️</text></svg>">
+  <style>
+    * { scroll-behavior: smooth; }
+    body { font-family: 'Outfit', sans-serif; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #00D4AA, #0EA5E9, #8B5CF6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .card-glow {
+      position: relative;
+      overflow: hidden;
+    }
+    .card-glow::before {
+      content: '';
+      position: absolute;
+      top: -2px; left: -2px; right: -2px; bottom: -2px;
+      background: linear-gradient(135deg, #00D4AA22, #0EA5E922, #8B5CF622);
+      border-radius: inherit;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .card-glow:hover::before { opacity: 1; }
+
+    .float-anim {
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-12px); }
+    }
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 0.7s ease forwards;
+    }
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .stagger-1 { animation-delay: 0.1s; }
+    .stagger-2 { animation-delay: 0.2s; }
+    .stagger-3 { animation-delay: 0.3s; }
+    .stagger-4 { animation-delay: 0.4s; }
+    .stagger-5 { animation-delay: 0.5s; }
+
+    .dash-card {
+      background: linear-gradient(145deg, #1a1f35, #0f1225);
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .dash-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(0, 212, 170, 0.3);
+      box-shadow: 0 20px 60px -15px rgba(0, 212, 170, 0.15);
+    }
+
+    .stat-number {
+      background: linear-gradient(135deg, #00D4AA, #0EA5E9);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .cert-badge {
+      background: linear-gradient(145deg, #1a1f35, #141830);
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: all 0.3s ease;
+    }
+    .cert-badge:hover {
+      border-color: rgba(139, 92, 246, 0.4);
+      box-shadow: 0 8px 30px -10px rgba(139, 92, 246, 0.2);
+    }
+
+    .nav-link {
+      position: relative;
+      transition: color 0.3s ease;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #00D4AA, #0EA5E9);
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::after { width: 100%; }
+
+    .toast-msg {
+      animation: toastIn 0.3s ease, toastOut 0.3s ease 1.7s forwards;
+    }
+    @keyframes toastIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes toastOut {
+      from { opacity: 1; transform: translateY(0); }
+      to { opacity: 0; transform: translateY(20px); }
+    }
+
+    .hero-grid {
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .pulse-dot {
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0,212,170,0.4); }
+      50% { opacity: 0.8; box-shadow: 0 0 0 8px rgba(0,212,170,0); }
+    }
+
+    .mobile-menu {
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+    }
+    .mobile-menu.open {
+      transform: translateX(0);
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full">
+  <div id="app-wrapper" class="w-full h-full overflow-auto" style="background-color: #0a0d1a; color: #c8d0e0;"><!-- Toast container -->
+   <div id="toast-container" class="fixed bottom-6 right-6 z-50"></div><!-- NAV -->
+   <nav id="main-nav" class="fixed top-0 left-0 w-full z-40 backdrop-blur-xl border-b" style="background: rgba(10,13,26,0.85); border-color: rgba(255,255,255,0.06);">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16"><a href="#hero" class="flex items-center gap-2 group">
+      <div class="w-9 h-9 rounded-lg flex items-center justify-center" style="background: linear-gradient(135deg, #00D4AA, #0EA5E9);"><i data-lucide="bar-chart-3" style="width:18px;height:18px;color:#0a0d1a;"></i>
+      </div><span class="font-bold text-white text-lg tracking-tight" id="nav-brand">VF</span> </a>
+     <div class="hidden md:flex items-center gap-8"><a href="#sobre" class="nav-link text-sm font-medium" style="color:#8892a8;">Sobre</a> <a href="#dashboards" class="nav-link text-sm font-medium" style="color:#8892a8;">Dashboards</a> <a href="#certificacoes" class="nav-link text-sm font-medium" style="color:#8892a8;">Certificações</a> <a href="#contato" class="nav-link text-sm font-medium" style="color:#8892a8;">Contato</a>
+     </div><button id="mobile-toggle" class="md:hidden text-white p-2"> <i data-lucide="menu" style="width:22px;height:22px;"></i> </button>
+    </div>
+   </nav><!-- MOBILE MENU -->
+   <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 w-64 h-full z-50" style="background: #0f1225; border-left: 1px solid rgba(255,255,255,0.06);">
+    <div class="flex justify-end p-4"><button id="mobile-close" class="text-white p-2"><i data-lucide="x" style="width:22px;height:22px;"></i></button>
+    </div>
+    <div class="flex flex-col gap-4 px-6"><a href="#sobre" class="mobile-link text-lg font-medium" style="color:#c8d0e0;">Sobre</a> <a href="#dashboards" class="mobile-link text-lg font-medium" style="color:#c8d0e0;">Dashboards</a> <a href="#certificacoes" class="mobile-link text-lg font-medium" style="color:#c8d0e0;">Certificações</a> <a href="#contato" class="mobile-link text-lg font-medium" style="color:#c8d0e0;">Contato</a>
+    </div>
+   </div><!-- HERO -->
+   <section id="hero" class="hero-grid relative pt-28 pb-20 sm:pt-36 sm:pb-28 px-4 sm:px-6">
+    <div class="max-w-4xl mx-auto text-center relative z-10">
+     <div class="fade-up flex items-center justify-center gap-2 mb-6">
+      <div class="w-2 h-2 rounded-full pulse-dot" style="background:#00D4AA;"></div><span class="mono text-xs tracking-widest uppercase" style="color:#00D4AA;">Disponível para projetos</span>
+     </div>
+     <h1 id="hero-name" class="fade-up stagger-1 text-4xl sm:text-5xl md:text-6xl font-extrabold text-white leading-tight mb-4">Vinícius da Silva Faria</h1>
+     <p id="hero-subtitle" class="fade-up stagger-2 text-lg sm:text-xl md:text-2xl font-medium gradient-text mb-6">Desenvolvedor de Dashboards e Automações</p>
+     <p id="hero-description" class="fade-up stagger-3 text-base sm:text-lg max-w-2xl mx-auto mb-10 leading-relaxed" style="color:#8892a8;">Transformo dados complexos em dashboards interativos e visualmente impactantes que impulsionam decisões estratégicas para o seu negócio.</p>
+     <div class="fade-up stagger-4"><a href="#contato" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl text-sm font-semibold transition-all duration-300 hover:scale-105" style="background: linear-gradient(135deg, #00D4AA, #0EA5E9); color: #0a0d1a;"> <i data-lucide="send" style="width:16px;height:16px;"></i> Entre em contato </a>
+     </div>
+    </div><!-- Decorative orbs -->
+    <div class="float-anim absolute top-20 left-10 w-72 h-72 rounded-full opacity-10 blur-3xl pointer-events-none" style="background: #00D4AA;"></div>
+    <div class="float-anim absolute bottom-10 right-10 w-64 h-64 rounded-full opacity-10 blur-3xl pointer-events-none" style="background: #8B5CF6; animation-delay: -3s;"></div>
+   </section><!-- STATS / SOBRE -->
+   <section id="sobre" class="py-16 sm:py-20 px-4 sm:px-6">
+    <div class="max-w-5xl mx-auto">
+     <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+      <div class="dash-card rounded-2xl p-6 sm:p-8 text-center">
+       <p class="stat-number text-4xl sm:text-5xl font-extrabold mb-2">2+</p>
+       <p class="text-sm font-medium" style="color:#8892a8;">Anos de Experiência</p>
+      </div>
+      <div class="dash-card rounded-2xl p-6 sm:p-8 text-center">
+       <p class="stat-number text-4xl sm:text-5xl font-extrabold mb-2">10</p>
+       <p class="text-sm font-medium" style="color:#8892a8;">Projetos Entregues</p>
+      </div>
+      <div class="dash-card rounded-2xl p-6 sm:p-8 text-center">
+       <p class="stat-number text-4xl sm:text-5xl font-extrabold mb-2">15h+</p>
+       <p class="text-sm font-medium" style="color:#8892a8;">Tempo Otimizado por BI</p>
+      </div>
+     </div>
+    </div>
+   </section><!-- DASHBOARDS -->
+   <section id="dashboards" class="py-16 sm:py-20 px-4 sm:px-6">
+    <div class="max-w-5xl mx-auto">
+     <div class="text-center mb-12"><span class="mono text-xs tracking-widest uppercase" style="color:#0EA5E9;">Portfólio</span>
+      <h2 class="text-3xl sm:text-4xl font-bold text-white mt-2">Dashboards</h2>
+      <p class="mt-3 text-sm" style="color:#8892a8;">Exemplos de dashboards criados para diferentes áreas de negócio</p>
+     </div>
+     <div class="grid grid-cols-1 md:grid-cols-3 gap-6"><!-- Dashboard Financeiro -->
+      <div class="dash-card rounded-2xl overflow-hidden group">
+       <div class="h-44 relative flex items-center justify-center" style="background: linear-gradient(145deg, #0c2a2a, #0a1520);">
+        <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at 30% 40%, #00D4AA33 0%, transparent 50%), radial-gradient(circle at 70% 60%, #0EA5E933 0%, transparent 50%);"></div>
+        <div class="relative flex flex-col items-center gap-3">
+         <div class="w-14 h-14 rounded-xl flex items-center justify-center" style="background: rgba(0,212,170,0.15); border: 1px solid rgba(0,212,170,0.2);"><i data-lucide="trending-up" style="width:28px;height:28px;color:#00D4AA;"></i>
+         </div>
+         <div class="flex gap-1.5">
+          <div class="w-8 h-5 rounded" style="background:rgba(0,212,170,0.2);"></div>
+          <div class="w-12 h-5 rounded" style="background:rgba(14,165,233,0.2);"></div>
+          <div class="w-6 h-5 rounded" style="background:rgba(0,212,170,0.15);"></div>
+         </div>
+        </div>
+       </div>
+       <div class="p-5">
+        <h3 class="text-white font-semibold text-lg mb-1">Dashboard Financeiro</h3>
+        <p class="text-xs leading-relaxed" style="color:#8892a8;">Controle de receitas, despesas, fluxo de caixa e indicadores financeiros em tempo real.</p>
+        <div class="flex gap-2 mt-4 flex-wrap"><span class="mono text-xs px-2.5 py-1 rounded-lg" style="background:rgba(0,212,170,0.1);color:#00D4AA;">Power BI</span> <span class="mono text-xs px-2.5 py-1 rounded-lg" style="background:rgba(14,165,233,0.1);color:#0EA5E9;">DAX</span>
+        </div>
+       </div>
+      </div><!-- Dashboard de Vendas -->
+      <div class="dash-card rounded-2xl overflow-hidden group">
+       <div class="h-44 relative flex items-center justify-center" style="background: linear-gradient(145deg, #1a1535, #0f1225);">
+        <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at 40% 30%, #8B5CF633 0%, transparent 50%), radial-gradient(circle at 60% 70%, #0EA5E933 0%, transparent 50%);"></div>
+        <div class="relative flex flex-col items-center gap-3">
+         <div class="w-14 h-14 rounded-xl flex items-center justify-center" style="background: rgba(139,92,246,0.15); border: 1px solid rgba(139,92,246,0.2);"><i data-lucide="shopping-cart" style="width:28px;height:28px;color:#8B5CF6;"></i>
+         </div>
+         <div class="flex gap-1">
+          <div class="w-3 h-8 rounded" style="background:rgba(139,92,246,0.25);"></div>
+          <div class="w-3 h-12 rounded" style="background:rgba(139,92,246,0.35);"></div>
+          <div class="w-3 h-6 rounded" style="background:rgba(139,92,246,0.2);"></div>
+          <div class="w-3 h-10 rounded" style="background:rgba(139,92,246,0.3);"></div>
+          <div class="w-3 h-14 rounded" style="background:rgba(139,92,246,0.4);"></div>
+         </div>
+        </div>
+       </div>
+       <div class="p-5">
+        <h3 class="text-white font-semibold text-lg mb-1">Dashboard de Vendas</h3>
+        <p class="text-xs leading-relaxed" style="color:#8892a8;">Análise de performance de vendas, metas, funil de conversão e ranking de vendedores.</p>
+        <div class="flex gap-2 mt-4 flex-wrap"><span class="mono text-xs px-2.5 py-1 rounded-lg" style="background:rgba(139,92,246,0.1);color:#8B5CF6;">Power BI</span> <span class="mono text-xs px-2.5 py-1 rounded-lg" style="background:rgba(14,165,233,0.1);color:#0EA5E9;">SQL</span>
+        </div>
+       </div>
+      </div><!-- Dashboard de RH -->
+      <div class="dash-card rounded-2xl overflow-hidden group">
+       <div class="h-44 relative flex items-center justify-center" style="background: linear-gradient(145deg, #1a2535, #0f1825);">
+        <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at 50% 40%, #0EA5E933 0%, transparent 50%), radial-gradient(circle at 30% 70%, #00D4AA33 0%, transparent 50%);"></div>
+        <div class="relative flex flex-col items-center gap-3">
+         <div class="w-14 h-14 rounded-xl flex items-center justify-center" style="background: rgba(14,165,233,0.15); border: 1px solid rgba(14,165,233,0.2);"><i data-lucide="users" style="width:28px;height:28px;color:#0EA5E9;"></i>
+         </div>
+         <div class="flex gap-2 items-end">
+          <div class="w-10 h-3 rounded-full" style="background:rgba(14,165,233,0.3);"></div>
+          <div class="w-7 h-3 rounded-full" style="background:rgba(0,212,170,0.3);"></div>
+         </div>
+        </div>
+       </div>
+       <div class="p-5">
+        <h3 class="text-white font-semibold text-lg mb-1">Dashboard de RH</h3>
+        <p class="text-xs leading-relaxed" style="color:#8892a8;">Métricas de colaboradores, turnover, headcount, absenteísmo e clima organizacional.</p>
+        <div class="flex gap-2 mt-4 flex-wrap"><span class="mono text-xs px-2.5 py-1 rounded-lg" style="background:rgba(14,165,233,0.1);color:#0EA5E9;">Power BI</span> <span class="mono text-xs px-2.5 py-1 rounded-lg" style="background:rgba(0,212,170,0.1);color:#00D4AA;">Python</span>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- CERTIFICAÇÕES -->
+   <section id="certificacoes" class="py-16 sm:py-20 px-4 sm:px-6">
+    <div class="max-w-5xl mx-auto">
+     <div class="text-center mb-12"><span class="mono text-xs tracking-widest uppercase" style="color:#8B5CF6;">Formação</span>
+      <h2 class="text-3xl sm:text-4xl font-bold text-white mt-2">Certificações</h2>
+     </div>
+     <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+      <div class="cert-badge rounded-2xl p-6 text-center">
+       <div class="w-12 h-12 rounded-xl mx-auto mb-4 flex items-center justify-center" style="background:rgba(139,92,246,0.12); border:1px solid rgba(139,92,246,0.2);"><i data-lucide="award" style="width:24px;height:24px;color:#8B5CF6;"></i>
+       </div>
+       <h3 class="text-white font-semibold mb-1">Power BI</h3>
+       <p class="text-xs mb-3" style="color:#8892a8;">Data Science Academy</p><span class="mono text-xs px-3 py-1 rounded-full" style="background:rgba(139,92,246,0.1);color:#8B5CF6;">2024</span>
+      </div>
+      <div class="cert-badge rounded-2xl p-6 text-center">
+       <div class="w-12 h-12 rounded-xl mx-auto mb-4 flex items-center justify-center" style="background:rgba(0,212,170,0.12); border:1px solid rgba(0,212,170,0.2);"><i data-lucide="code-2" style="width:24px;height:24px;color:#00D4AA;"></i>
+       </div>
+       <h3 class="text-white font-semibold mb-1">Python &amp; SQL</h3>
+       <p class="text-xs mb-3" style="color:#8892a8;">Desenvolvimento e Dados</p><span class="mono text-xs px-3 py-1 rounded-full" style="background:rgba(0,212,170,0.1);color:#00D4AA;">2025</span>
+      </div>
+      <div class="cert-badge rounded-2xl p-6 text-center">
+       <div class="w-12 h-12 rounded-xl mx-auto mb-4 flex items-center justify-center" style="background:rgba(14,165,233,0.12); border:1px solid rgba(14,165,233,0.2);"><i data-lucide="braces" style="width:24px;height:24px;color:#0EA5E9;"></i>
+       </div>
+       <h3 class="text-white font-semibold mb-1">JavaScript</h3>
+       <p class="text-xs mb-3" style="color:#8892a8;">Desenvolvimento Web</p><span class="mono text-xs px-3 py-1 rounded-full" style="background:rgba(14,165,233,0.1);color:#0EA5E9;">2026</span>
+      </div>
+     </div>
+    </div>
+   </section><!-- CONTATO -->
+   <section id="contato" class="py-16 sm:py-20 px-4 sm:px-6">
+    <div class="max-w-3xl mx-auto">
+     <div class="text-center mb-12"><span class="mono text-xs tracking-widest uppercase" style="color:#00D4AA;">Vamos conversar</span>
+      <h2 class="text-3xl sm:text-4xl font-bold text-white mt-2">Entre em Contato</h2>
+      <p class="mt-3 text-sm" style="color:#8892a8;">Pronto para transformar seus dados em insights? Fale comigo!</p>
+     </div>
+     <div class="grid grid-cols-1 sm:grid-cols-2 gap-5"><!-- Email -->
+      <div class="dash-card rounded-2xl p-5 flex items-center gap-4">
+       <div class="w-12 h-12 rounded-xl flex-shrink-0 flex items-center justify-center" style="background:rgba(0,212,170,0.12); border:1px solid rgba(0,212,170,0.2);"><i data-lucide="mail" style="width:22px;height:22px;color:#00D4AA;"></i>
+       </div>
+       <div class="min-w-0 flex-1">
+        <p class="text-xs font-medium mb-0.5" style="color:#8892a8;">Email</p>
+        <p id="email-display" class="text-white text-sm font-medium truncate">viniciusfaria369@gmail.com</p>
+       </div><button id="copy-email-btn" onclick="copyEmail()" class="flex-shrink-0 w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-200 hover:scale-110" style="background:rgba(0,212,170,0.1);" title="Copiar email"> <i data-lucide="copy" style="width:16px;height:16px;color:#00D4AA;"></i> </button>
+      </div><!-- GitHub --> <a id="github-link" href="https://github.com/ViniSF1" target="_blank" rel="noopener noreferrer" class="dash-card rounded-2xl p-5 flex items-center gap-4 no-underline">
+       <div class="w-12 h-12 rounded-xl flex-shrink-0 flex items-center justify-center" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1);"><i data-lucide="github" style="width:22px;height:22px;color:#c8d0e0;"></i>
+       </div>
+       <div class="min-w-0 flex-1">
+        <p class="text-xs font-medium mb-0.5" style="color:#8892a8;">GitHub</p>
+        <p class="text-white text-sm font-medium">ViniSF1</p>
+       </div><i data-lucide="arrow-up-right" style="width:16px;height:16px;color:#8892a8;"></i> </a> <!-- LinkedIn --> <a id="linkedin-link" href="https://www.linkedin.com/in/vinicius-da-silva-faria-8186a22b0/" target="_blank" rel="noopener noreferrer" class="dash-card rounded-2xl p-5 flex items-center gap-4 no-underline">
+       <div class="w-12 h-12 rounded-xl flex-shrink-0 flex items-center justify-center" style="background:rgba(14,165,233,0.12); border:1px solid rgba(14,165,233,0.2);"><i data-lucide="linkedin" style="width:22px;height:22px;color:#0EA5E9;"></i>
+       </div>
+       <div class="min-w-0 flex-1">
+        <p class="text-xs font-medium mb-0.5" styles="color:#8892a8;">LinkedIn</p>
+        <p class="text-white text-sm font-medium">Vinícius da Silva Faria</p>
+       </div><i data-lucide="arrow-up-right" style="width:16px;height:16px;color:#8892a8;"></i> </a> <!-- Instagram --> <a id="instagram-link" href="https://instagram.com/vxnf7" target="_blank" rel="noopener noreferrer" class="dash-card rounded-2xl p-5 flex items-center gap-4 no-underline">
+       <div class="w-12 h-12 rounded-xl flex-shrink-0 flex items-center justify-center" style="background:rgba(232,67,147,0.12); border:1px solid rgba(232,67,147,0.2);"><i data-lucide="instagram" style="width:22px;height:22px;color:#E84393;"></i>
+       </div>
+       <div class="min-w-0 flex-1">
+        <p class="text-xs font-medium mb-0.5" style="color:#8892a8;">Instagram</p>
+        <p class="text-white text-sm font-medium">@vxnf7</p>
+       </div><i data-lucide="arrow-up-right" style="width:16px;height:16px;color:#8892a8;"></i> </a>
+     </div>
+    </div>
+   </section><!-- FOOTER -->
+   <footer class="py-8 px-4 text-center border-t" style="border-color:rgba(255,255,255,0.04);">
+    <p class="text-xs" style="color:#5a6478;">© 2025 Vinícius da Silva Faria. Todos os direitos reservados.</p>
+   </footer>
+  </div>
+  <script>
+  // Config defaults
+  const defaultConfig = {
+    background_color: '#0a0d1a',
+    surface_color: '#1a1f35',
+    text_color: '#c8d0e0',
+    primary_action_color: '#00D4AA',
+    secondary_action_color: '#0EA5E9',
+    font_family: 'Outfit',
+    font_size: 16,
+    hero_name: 'Vinícius da Silva Faria',
+    hero_subtitle: 'Desenvolvedor de Dashboards e Automações',
+    hero_description: 'Transformo dados complexos em dashboards interativos e visualmente impactantes que impulsionam decisões estratégicas para o seu negócio.',
+    email_address: 'viniciusfaria369@gmail.com',
+    github_url: 'https://github.com/',
+    linkedin_url: 'https://linkedin.com/',
+    instagram_url: 'https://instagram.com/'
+  };
+
+  // Copy email
+  function copyEmail() {
+    const email = (window.elementSdk && window.elementSdk.config && window.elementSdk.config.email_address) || defaultConfig.email_address;
+    navigator.clipboard.writeText(email).then(() => {
+      showToast('Email copiado!');
+    }).catch(() => {
+      showToast('Não foi possível copiar');
+    });
+  }
+
+  function showToast(msg) {
+    const container = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+    toast.className = 'toast-msg flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-medium text-white mb-2';
+    toast.style.background = 'linear-gradient(135deg, #00D4AA, #0EA5E9)';
+    toast.style.color = '#0a0d1a';
+    toast.innerHTML = '<i data-lucide="check-circle" style="width:16px;height:16px;"></i>' + msg;
+    container.appendChild(toast);
+    lucide.createIcons();
+    setTimeout(() => toast.remove(), 2200);
+  }
+
+  // Mobile menu
+  document.getElementById('mobile-toggle').addEventListener('click', () => {
+    document.getElementById('mobile-menu').classList.add('open');
+  });
+  document.getElementById('mobile-close').addEventListener('click', () => {
+    document.getElementById('mobile-menu').classList.remove('open');
+  });
+  document.querySelectorAll('.mobile-link').forEach(link => {
+    link.addEventListener('click', () => {
+      document.getElementById('mobile-menu').classList.remove('open');
+    });
+  });
+
+  // Element SDK
+  function applyConfig(config) {
+    const c = { ...defaultConfig, ...config };
+    const wrapper = document.getElementById('app-wrapper');
+    wrapper.style.backgroundColor = c.background_color;
+    wrapper.style.color = c.text_color;
+    const font = c.font_family || defaultConfig.font_family;
+    const stack = font + ', sans-serif';
+    wrapper.style.fontFamily = stack;
+    const base = c.font_size || defaultConfig.font_size;
+
+    document.getElementById('hero-name').textContent = c.hero_name;
+    document.getElementById('hero-name').style.fontSize = (base * 3) + 'px';
+    document.getElementById('hero-subtitle').textContent = c.hero_subtitle;
+    document.getElementById('hero-subtitle').style.fontSize = (base * 1.4) + 'px';
+    document.getElementById('hero-description').textContent = c.hero_description;
+    document.getElementById('hero-description').style.fontSize = base + 'px';
+    document.getElementById('email-display').textContent = c.email_address;
+    document.getElementById('github-link').href = c.github_url;
+    document.getElementById('linkedin-link').href = c.linkedin_url;
+    document.getElementById('instagram-link').href = c.instagram_url;
+  }
+
+  if (window.elementSdk) {
+    window.elementSdk.init({
+      defaultConfig,
+      onConfigChange: async (config) => { applyConfig(config); },
+      mapToCapabilities: (config) => {
+        const c = { ...defaultConfig, ...config };
+        return {
+          recolorables: [
+            { get: () => c.background_color, set: (v) => { config.background_color = v; window.elementSdk.setConfig({ background_color: v }); } },
+            { get: () => c.surface_color, set: (v) => { config.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); } },
+            { get: () => c.text_color, set: (v) => { config.text_color = v; window.elementSdk.setConfig({ text_color: v }); } },
+            { get: () => c.primary_action_color, set: (v) => { config.primary_action_color = v; window.elementSdk.setConfig({ primary_action_color: v }); } },
+            { get: () => c.secondary_action_color, set: (v) => { config.secondary_action_color = v; window.elementSdk.setConfig({ secondary_action_color: v }); } }
+          ],
+          borderables: [],
+          fontEditable: {
+            get: () => c.font_family,
+            set: (v) => { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); }
+          },
+          fontSizeable: {
+            get: () => c.font_size,
+            set: (v) => { config.font_size = v; window.elementSdk.setConfig({ font_size: v }); }
+          }
+        };
+      },
+      mapToEditPanelValues: (config) => {
+        const c = { ...defaultConfig, ...config };
+        return new Map([
+          ['hero_name', c.hero_name],
+          ['hero_subtitle', c.hero_subtitle],
+          ['hero_description', c.hero_description],
+          ['email_address', c.email_address],
+          ['github_url', c.github_url],
+          ['linkedin_url', c.linkedin_url],
+          ['instagram_url', c.instagram_url]
+        ]);
+      }
+    });
+  }
+
+  // Init icons
+  lucide.createIcons();
+</script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9de45f95a000aa89',t:'MTc3MzgzODMzNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
